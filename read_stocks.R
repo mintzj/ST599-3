@@ -10,9 +10,12 @@ folders_path <- "T:/Statistics/Share/mintzj/stock/quantquote_daily_sp500_83986/d
 files <- list.files(path = folders_path, full.names = F)
 stock_names <- sub(pattern = "^.*_([a-z]+)\\..+", replacement = "\\1", x = files, perl = T)
 
+#  We think the data is 
+#  Date, Time, Open, High, Low, Close, Volume
 
 load_folder <- function(folders_path, n_stocks = 500){
   files <- list.files(path = folders_path, full.names = T)
+  column_names <- c("Date", "Time", "Open", "High", "Low", "Close", "Volume")
   stock_names <- sub(pattern = "^.*_([a-z]+)\\..+", replacement = "\\1", x = files, perl = T)
   n_files <- length(files)
   
@@ -20,25 +23,19 @@ load_folder <- function(folders_path, n_stocks = 500){
   stocks <- vector("list", n_files)
   
   for (i in 1:n_files){
-    stocks[[i]] <- read.csv(file = files[i])
+    stocks[[i]] <- read.csv(file = files[i], header = F)
+    names(stocks[[i]]) <- column_names
   }
+ 
+  names(stocks) <- stock_names
   return(stocks)
+
 }
+
+
+stocks <- load_folder(folders_path)
+View(stocks$abt)
 
 stock_names <- sub(pattern = "^.*_([a-z]+)\\..+", replacement = "\\1", x = files, perl = T)
 head(stock_names, 100)
 View(stocks[[1]])
-
-stocks <- load_folder(folders_path = folders_path)
-
-# Grab the folder names and paths.
-folders.path <- list.files(path = folders_path, full.names = T)
-folders.name <- list.files(path = folders_path, full.names = F)
-
-
-#  Load up n images from specified folder.
-images <- load_folder(folders.path[20], n_images = 9)
-plot_images(images = images, folder_name = folders.name[20])
-
-#image(images[[6]])
-#folders.name[15]
