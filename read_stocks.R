@@ -2,8 +2,9 @@
 # From project 2
 
 #  Set your folder directory
-folders_path <- "Z:/ST599/Project3/stock/quantquote_daily_sp500_83986/daily"
-folders_path <- "Z:/ST599/Project3/stock"
+#folders_path <- "Z:/ST599/Project3/stock/quantquote_daily_sp500_83986/daily"
+folders_path <- "T:/Statistics/Share/mintzj/stock/quantquote_daily_sp500_83986/daily"
+#folders_path <- "Z:/ST599/Project3/stock"
 
 
 files <- list.files(path = folders_path, full.names = F)
