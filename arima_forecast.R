@@ -11,7 +11,9 @@ plot(log(aapl.ts))
 plot(decompose(log(aapl.ts)))
 
 acf(aapl.ts)
+acf(log(aapl.ts))
 pacf(aapl.ts)
+pacf(log(aapl.ts))
 
 # PACF spike only at term 1, ACF spikes descending slowly from 1.
 # This is almost certainly an AR(1) series of difference zero.
@@ -20,7 +22,7 @@ AIC(arima(aapl.ts, order=c(1,0,0), method="ML"),
     arima(aapl.ts, order=c(0,0,1), method="ML"),
     arima(aapl.ts, order=c(1,0,1), method="ML"))
 
-acf(resid(arima(aapl.ts, order=c(1,0,0), method="ML", seasonal=c(1,0,0))))
+# acf(resid(arima(aapl.ts, order=c(1,0,0), method="ML", seasonal=c(1,0,0))))
 
 # As expected, our ACF for an AR(1) series is the best.
 # Using this as our fit, we can further work on season
@@ -170,3 +172,7 @@ pred.res <- exp(open.pred)-open.true
 summary(pred.res)
 
 # This performs even worse; -491.80 minimum, -96.56 median. This is clearly not what we want!
+
+# All of this is interesting enough; however, we shouldn't look too hard into this.
+# After all, if we have a given stock's close price for the day, we should also have aapl.
+# We should look towards predicting aapl based on previous stock prices only.
